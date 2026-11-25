@@ -1,0 +1,44 @@
+services:
+  cache:
+    image: redis:7.4-alpine
+    restart: always
+    command: ["redis-server", "--save", "20", "1", "--loglevel", "warning", "--requirepass", "password"]
+    volumes:
+      - cache:/data
+    ports:
+      - "6379:6379"
+  cache-replica-1:
+    image: redis:7.4-alpine
+    restart: always
+    command: ["redis-server", "--save", "20", "1", "--loglevel", "warning", "--requirepass", "password", "--replicaof", "cache", "6379", "--masterauth", "password"]
+    volumes:
+      - cache-replica-1:/data
+  cache-replica-2:
+    image: redis:7.4-alpine
+    restart: always
+    command: ["redis-server", "--save", "20", "1", "--loglevel", "warning", "--requirepass", "password", "--replicaof", "cache", "6379", "--masterauth", "password"]
+    volumes:
+      - cache-replica-2:/data
+  cache-replica-3:
+    image: redis:7.4-alpine
+    restart: always
+    command: ["redis-server", "--save", "20", "1", "--loglevel", "warning", "--requirepass", "password", "--replicaof", "cache", "6379", "--masterauth", "password"]
+    volumes:
+      - cache-replica-3:/data
+  cache-replica-4:
+    image: redis:7.4-alpine
+    restart: always
+    command: ["redis-server", "--save", "20", "1", "--loglevel", "warning", "--requirepass", "password", "--replicaof", "cache", "6379", "--masterauth", "password"]
+    volumes:
+      - cache-replica-4:/data
+volumes:
+  cache:
+    driver: local
+  cache-replica-1:
+    driver: local
+  cache-replica-2:
+    driver: local
+  cache-replica-3:
+    driver: local
+  cache-replica-4:
+    driver: local
